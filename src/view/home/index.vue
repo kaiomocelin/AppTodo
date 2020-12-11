@@ -39,7 +39,7 @@
         </ul>
       </div>
 
-      <div class="coluna-50">
+      <div class="coluna-50 completed">
         <ul v-for="(item, key) in todos" :key="key">
           <li v-show="item.completed">
             {{ item.title }}
@@ -113,15 +113,22 @@ export default {
 .linha {
   display: flex;
   flex-flow: row wrap;
+  padding: 1rem;
 }
 .coluna-50 {
   width: 50%;
-  border: lawngreen;
+  border-width: 1px;
+  border-style: solid;
+}
+.completed {
+  padding: 1rem;
+  text-align: right;
 }
 ul {
   list-style-type: none;
 }
 .container {
+  margin-top: 2rem;
   text-align: center;
   font-family: "Courier New", Courier, monospace;
 }
