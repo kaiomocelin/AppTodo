@@ -47,6 +47,10 @@ export default {
     };
   },
 
+  watch: {
+    items() {},
+  },
+
   methods: {
     save() {
       this.items.push({
