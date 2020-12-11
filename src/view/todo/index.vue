@@ -24,9 +24,9 @@
           :id="'edit-modal-' + key"
           title="Editar tarefa"
           centered
-          @ok="save()"
+          @ok="edit(key)"
         >
-          <input type="text" :value="item.title" />
+          <input type="text" v-model="newValue" />
         </b-modal>
       </ul>
     </div>
@@ -37,22 +37,18 @@
 export default {
   data() {
     return {
-      items: [
-        {
-          title: "",
-          conclude: false,
-        },
-      ],
+      items: [],
       value: "",
+      newValue: "",
     };
-  },
-
-  watch: {
-    items() {},
   },
 
   methods: {
     save() {
+      if (this.items.find((x) => x.title === this.value) || this.value === "") {
+        this.value = "";
+        return false;
+      }
       this.items.push({
         title: this.value,
       });
@@ -61,8 +57,14 @@ export default {
     remove(index) {
       this.items.splice(index, 1);
     },
-    edit() {
-      this.$bvModal.show("edit-modal");
+    edit(key) {
+      if (this.items.find((x) => x.title === this.newValue)) {
+        this.newValue = "";
+        return false;
+      }
+      const newValue = { title: this.newValue };
+      this.items.splice(key, 1, newValue);
+      this.newValue = "";
     },
   },
 };
