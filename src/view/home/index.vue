@@ -1,13 +1,15 @@
 <template>
-  <div id="app">
-    <h1>Tarefas</h1>
-    <TasksProgress :progress="progress" />
-    <NewTask @taskAdded="addTask($event)" />
-    <TaskGrid
-      :tasks="tasks"
-      @taskDeleted="deleteTask"
-      @taskStateChanged="toggleTaskState"
-    />
+  <div>
+    <div id="app">
+      <h1>Tarefas</h1>
+      <TasksProgress :progress="progress" />
+      <NewTask @taskAdded="addTask($event)" />
+      <TaskGrid
+        :tasks="tasks"
+        @taskDeleted="deleteTask"
+        @taskStateChanged="toggleTaskState"
+      />
+    </div>
   </div>
 </template>
 
@@ -63,6 +65,26 @@ export default {
             pending: task.pending || true,
           },
         ];
+        this.$bvToast.toast("Tarefa adicionada com sucesso!", {
+          title: "Success",
+          variant: "success",
+          autoHideDelay: 3000,
+          noCloseButton: true,
+        });
+      } else if (!reallyNew) {
+        this.$bvToast.toast("Esta tarefa já existe!", {
+          title: "Error",
+          variant: "danger",
+          autoHideDelay: 3000,
+          noCloseButton: true,
+        });
+      } else {
+        this.$bvToast.toast("Nada para adicionar!", {
+          title: "Error",
+          variant: "danger",
+          autoHideDelay: 3000,
+          noCloseButton: true,
+        });
       }
     },
     deleteTask(id) {
